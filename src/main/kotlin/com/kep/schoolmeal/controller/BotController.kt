@@ -95,8 +95,13 @@ class BotController(
             response.body()?.close()
             response.close()
 
-            if (status != 200)
+            if (status != 200 || message == null) {
                 throw java.lang.RuntimeException("status: $status")
+            }
+
+            if ("해당하는 데이터가 없습니다." in message) {
+                return "해당하는 데이터가 없습니다."
+            }
 
             val element = JsonParser.parseString(message).asJsonObject
             val mealInfo = element.getAsJsonArray("mealServiceDietInfo").get(1)
