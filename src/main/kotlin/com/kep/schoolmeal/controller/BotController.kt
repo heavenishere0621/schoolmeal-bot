@@ -97,6 +97,8 @@ class BotController(
                 return "해당하는 데이터가 없습니다."
             }
 
+            val alg = "알레르기 유발식품 정보 표시\n1.난류 2.우유 3.메밀 4.땅콩 5.대두 6.밀 7.고등어 8.게 9.새우 10.돼지고기 11.복숭아 12.토마토 13.아황산류 14.호두 15.닭고기 16.쇠고기 17.오징어 18.조개류(굴, 전복, 홍합 포함) 19.잣"
+
             val element = JsonParser.parseString(message).asJsonObject
             val mealInfo = element.getAsJsonArray("mealServiceDietInfo").get(1)
             val row = mealInfo.asJsonObject.getAsJsonArray("row").get(0).asJsonObject
@@ -104,7 +106,7 @@ class BotController(
             val cal =  row.get("CAL_INFO").asString.replace("<br/>", "\n")
             val NTR_INFO =  row.get("NTR_INFO").asString.replace("<br/>", "\n")
 
-            return "[메뉴] \n $dish \n\n [칼로리] \n $cal \n\n [영양정보] \n $NTR_INFO"
+            return "[메뉴] \n$dish \n\n[칼로리] \n$cal \n\n [영양정보] \n$NTR_INFO\n\n$alg"
 
 
 
