@@ -23,7 +23,8 @@ class BotController(
         val request = Gson().fromJson (httpEntity.body, SkillRequest::class.java)
         println(request.toString())
 
-        val text = getMealText("20220527")
+	val formatDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"))
+        val text = getMealText(formatDate)
 
         val outputs: List<Output> = listOf(
             SimpleText(text)
@@ -36,12 +37,16 @@ class BotController(
 
     @PostMapping("/another")
     fun another(httpEntity: HttpEntity<String>): SkillResponse {
+	println(httpEntity.body.toString())
         val request = Gson().fromJson (httpEntity.body, SkillRequest::class.java)
-        println(request.toString())
+
+	println(request.action.detailParams.sysdate?.origin.toString())
 
         val formatDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"))
+	val date = (request.action.detailParams.sysdate?.origin?:formatDate).replace("-", "")
+	println(date)
 
-        val text = getMealText(request.action.detailParams.sysdate?.origin?:formatDate)
+        val text = getMealText(date)
 
         val outputs: List<Output> = listOf(
             SimpleText(text)
