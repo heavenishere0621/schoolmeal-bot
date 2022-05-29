@@ -106,7 +106,7 @@ class BotController(
             val cal =  row.get("CAL_INFO").asString.replace("<br/>", "\n")
             val NTR_INFO =  row.get("NTR_INFO").asString.replace("<br/>", "\n")
 
-            return "[메뉴] \n$dish \n\n[칼로리] \n$cal \n\n [영양정보] \n$NTR_INFO\n\n$alg"
+            return "[메뉴]\n$dish\n(괄호안의 숫자는 알레르기 유발 정보입니다.)\n\n[칼로리] \n$cal \n\n[영양정보] \n$NTR_INFO\n\n$alg"
 
 
 
