@@ -1,7 +1,5 @@
 spring:
-  profiles:
-    active: localreal
-    
+
   cache:
     jcache:
       config: classpath:ehcache.xml
