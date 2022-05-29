@@ -106,9 +106,13 @@ class BotController(
             val element = JsonParser.parseString(message).asJsonObject
             val mealInfo = element.getAsJsonArray("mealServiceDietInfo").get(1)
             val row = mealInfo.asJsonObject.getAsJsonArray("row").get(0).asJsonObject
-            val dish = row.get("DDISH_NM").asString
+            val dish = row.get("DDISH_NM").asString.replace("<br/>", "\n")
+            val cal =  row.get("CAL_INFO").asString.replace("<br/>", "\n")
+            val NTR_INFO =  row.get("NTR_INFO").asString.replace("<br/>", "\n")
 
-            return dish.replace("<br/>", "\n")
+            return "[메뉴] \n $dish \n [칼로리] \n $cal \n [영양정보] \n $NTR_INFO"
+
+
 
         } catch(e: Exception) {
             logger.error("[okhttp] newCall fail!!", e)
