@@ -9,6 +9,8 @@ import com.kep.schoolmeal.model.bot.skill.*
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.apache.http.client.utils.URIBuilder
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @RestController
 @RequestMapping("/bot/")
@@ -37,7 +39,9 @@ class BotController(
         val request = Gson().fromJson (httpEntity.body, SkillRequest::class.java)
         println(request.toString())
 
-        val text = getMealText("20220527")
+        val formatDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"))
+
+        val text = getMealText(request.action.detailParams.sysdate?.origin?:formatDate)
 
         val outputs: List<Output> = listOf(
             SimpleText(text)
@@ -94,7 +98,7 @@ class BotController(
             val row = mealInfo.asJsonObject.getAsJsonArray("row").get(0).asJsonObject
             val dish = row.get("DDISH_NM").asString
 
-            return dish.replace("<br/>", "/n")
+            return dish.replace("<br/>", "\n")
 
         } catch(e: Exception) {
             logger.error("[okhttp] newCall fail!!", e)

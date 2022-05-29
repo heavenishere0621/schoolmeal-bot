@@ -50,9 +50,7 @@ data class Parameter(
 
 
 class DetailParams (
-    val reserve_time: Parameter?,
-    val old_time: Parameter?,
-    val body: Parameter?
+    val sysdate: Parameter?
 )
 
 data class Extra(
